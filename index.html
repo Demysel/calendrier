@@ -5,30 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendrier Interactif</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
 </head>
 <body>
+  <!-- Conteneur principal -->
   <div id="calendar-container">
     <header>
       <h1>Calendrier Interactif</h1>
       <div id="navigation">
-        <button id="prev">◀</button>
+        <button id="prev">◀ Précédent</button>
         <span id="currentMonthYear"></span>
-        <button id="next">▶</button>
+        <button id="next">Suivant ▶</button>
       </div>
     </header>
+
+    <!-- Calendrier -->
     <div id="calendar">
       <div id="days">
         <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
       </div>
       <div id="dates"></div>
     </div>
+
+    <!-- Bouton de réinitialisation -->
     <footer>
       <button id="reset">Réinitialiser</button>
     </footer>
   </div>
-  <div id="modal" style="display:none;">
+
+  <!-- Modale pour ajouter un rendez-vous -->
+  <div id="modal" style="display: none;">
     <div id="modalContent">
       <span id="close">&times;</span>
       <h2>Ajouter un rendez-vous</h2>
@@ -37,29 +42,30 @@
       <button id="save">Enregistrer</button>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Intégration des scripts Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+
+    // Configuration Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAU19mm6RDWy_fhoMo3SLWFuyvT4UDKKKk",
+      authDomain: "calendrier-300cb.firebaseapp.com",
+      databaseURL: "https://calendrier-300cb.firebaseio.com",
+      projectId: "calendrier-300cb",
+      storageBucket: "calendrier-300cb.appspot.com",
+      messagingSenderId: "556904721649",
+      appId: "1:556904721649:web:8d40a30990520e4ffbcd50",
+      measurementId: "G-9G8217QW9D"
+    };
+
+    // Initialisation Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
+  <!-- Script principal -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAU19mm6RDWy_fhoMo3SLWFuyvT4UDKKKk",
-    authDomain: "calendrier-300cb.firebaseapp.com",
-    projectId: "calendrier-300cb",
-    storageBucket: "calendrier-300cb.firebasestorage.app",
-    messagingSenderId: "556904721649",
-    appId: "1:556904721649:web:8d40a30990520e4ffbcd50",
-    measurementId: "G-9G8217QW9D"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
