@@ -140,3 +140,13 @@ saveButton.onclick = () => {
   saveAppointment(date, text);
   modal.style.display = "none";
 };
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+// Tester la connexion
+const db = getDatabase();
+const testRef = ref(db, "test");
+set(testRef, "Firebase connecté").then(() => {
+  console.log("Connexion réussie !");
+}).catch((error) => {
+  console.error("Erreur Firebase :", error);
+});
