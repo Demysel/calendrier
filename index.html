@@ -16,6 +16,7 @@
         <span id="currentMonthYear"></span>
         <button id="next">Suivant ▶</button>
       </div>
+      <button id="darkModeToggle">Activer le mode sombre</button>
     </header>
 
     <!-- Calendrier -->
@@ -32,7 +33,7 @@
     </footer>
   </div>
 
-  <!-- Modale pour ajouter un rendez-vous -->
+  <!-- Modale pour ajouter des rendez-vous -->
   <div id="modal" style="display: none;">
     <div id="modalContent">
       <span id="close">&times;</span>
@@ -43,29 +44,7 @@
     </div>
   </div>
 
-  <!-- Intégration des scripts Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-
-    // Configuration Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAU19mm6RDWy_fhoMo3SLWFuyvT4UDKKKk",
-      authDomain: "calendrier-300cb.firebaseapp.com",
-      databaseURL: "https://calendrier-300cb.firebaseio.com",
-      projectId: "calendrier-300cb",
-      storageBucket: "calendrier-300cb.appspot.com",
-      messagingSenderId: "556904721649",
-      appId: "1:556904721649:web:8d40a30990520e4ffbcd50",
-      measurementId: "G-9G8217QW9D"
-    };
-
-    // Initialisation Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
-
-  <!-- Script principal -->
+  <!-- Intégration des scripts -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
