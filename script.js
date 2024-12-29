@@ -102,3 +102,41 @@ renderCalendar();
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+
+const appointmentsRef = ref(db, "appointments");
+
+function renderCalendar() {
+  dates.innerHTML = "";
+  monthYear.textContent = currentDate.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+
+  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+  const lastDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+  for (let i = 1; i < (firstDay || 7); i++) dates.innerHTML += `<div></div>`;
+  for (let day = 1; day <= lastDate; day++) {
+    const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${day}`;
+    const hasAppointment = appointments[dateKey] ? "style='background:#ffedcc;'" : "";
+    dates.innerHTML += `<div ${hasAppointment} data-date="${dateKey}">${day}</div>`;
+  }
+
+  document.querySelectorAll("#dates div").forEach(date =>
+    date.addEventListener("click", e => openModal(e.target.dataset.date))
+  );
+}
+
+onValue(appointmentsRef, (snapshot) => {
+  appointments = snapshot.val() || {};
+  renderCalendar();
+});
+
+function saveAppointment(date, text) {
+  const appointmentRef = ref(db, `appointments/${date}`);
+  set(appointmentRef, text || null); // Supprime si texte vide
+}
+
+saveButton.onclick = () => {
+  const date = document.getElementById("selectedDate").textContent.split(" : ")[1];
+  const text = appointmentInput.value.trim();
+  saveAppointment(date, text);
+  modal.style.display = "none";
+};
