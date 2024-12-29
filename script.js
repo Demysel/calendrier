@@ -76,9 +76,6 @@ document.getElementById("next").onclick = () => {
   renderCalendar();
 };
 
-// Initialisation
-renderCalendar();
-
 
 
 const appointmentsRef = ref(db, "appointments");
