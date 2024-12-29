@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Contenu principal -->
+  <!-- Conteneur principal -->
   <div id="calendar-container">
     <header>
       <h1>Calendrier Interactif</h1>
@@ -60,14 +60,14 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Exemple d'utilisation
+    // Exemple de test Firebase
     const testRef = ref(db, "test");
-    set(testRef, "Données test Firebase")
-      .then(() => console.log("Firebase configuré avec succès !"))
+    set(testRef, "Firebase configuré avec succès !")
+      .then(() => console.log("Firebase configuré correctement."))
       .catch((error) => console.error("Erreur Firebase :", error));
   </script>
 
   <!-- Script principal -->
-  <script src="script.js" type="module"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
