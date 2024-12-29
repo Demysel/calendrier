@@ -48,3 +48,30 @@
   <script type="module" src="script.js"></script>
 </body>
 </html>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+  // Configuration Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyAU19mm6RDWy_fhoMo3SLWFuyvT4UDKKKk",
+    authDomain: "calendrier-300cb.firebaseapp.com",
+    databaseURL: "https://calendrier-300cb.firebaseio.com",
+    projectId: "calendrier-300cb",
+    storageBucket: "calendrier-300cb.appspot.com",
+    messagingSenderId: "556904721649",
+    appId: "1:556904721649:web:8d40a30990520e4ffbcd50",
+    measurementId: "G-9G8217QW9D",
+  };
+
+  // Initialisation Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Exemples de test
+  const testRef = ref(db, "test");
+  set(testRef, "Firebase configuré avec succès !")
+    .then(() => console.log("Données envoyées !"))
+    .catch((error) => console.error("Erreur Firebase :", error));
+</script>
