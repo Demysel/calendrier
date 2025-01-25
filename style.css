@@ -21,6 +21,21 @@ body {
     gap: 20px;
     margin-bottom: 20px;
 }
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: center;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.calendar-header div {
+  padding: 8px;
+  border-bottom: 2px solid var(--day-border);
+}
 
 .calendar {
     display: grid;
