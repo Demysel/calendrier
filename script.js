@@ -1,5 +1,5 @@
-const JSONBIN_API_KEY = '%%JSONBIN_API_KEY%%';
-const JSONBIN_BIN_ID = '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju';
+const JSONBIN_API_KEY = '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju';
+const JSONBIN_BIN_ID = '6794ec2de41b4d34e47e7ce5';
 
 let currentDate = new Date();
 let selectedEvent = null;
@@ -7,13 +7,13 @@ let selectedEvent = null;
 // Configuration CORS pour JSONBin.io
 const corsHeaders = {
   'Content-Type': 'application/json',
-  'X-Master-Key': JSONBIN_API_KEY,
+  'X-Master-Key': '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju',
   'Access-Control-Allow-Origin': 'https://dreamy-dolphin-b8aa6f.netlify.app'
 };
 
 async function loadEvents() {
   try {
-    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/6794ec2de41b4d34e47e7ce5/latest`, {
       headers: corsHeaders
     });
     const data = await response.json();
@@ -26,7 +26,7 @@ async function loadEvents() {
 
 async function saveEvents(events) {
   try {
-    await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+    await fetch(`https://api.jsonbin.io/v3/b/6794ec2de41b4d34e47e7ce5`, {
       method: 'PUT',
       headers: corsHeaders,
       body: JSON.stringify({ events })
