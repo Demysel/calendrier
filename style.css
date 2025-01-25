@@ -104,7 +104,11 @@ body {
     font-size: 16px !important; /* Important pour iOS */
   }
 }
-
+/* Ajouter pour les inputs mobiles */
+.mobile-friendly {
+  min-height: 40px;
+  touch-action: manipulation;
+}
 /* Correction spécifique Safari */
 @supports (-webkit-touch-callout: none) {
   .day {
