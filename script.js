@@ -1,4 +1,4 @@
-const JSONBIN_API_KEY = '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju';
+const JSONBIN_API_KEY = '$2a$10$j99ZptquF7iTqI/UP0xQMucBLqWZW/8bTlz859GxEqzmmfq0DpR4.';
 const JSONBIN_BIN_ID = '6794ec2de41b4d34e47e7ce5';
 
 let currentDate = new Date();
@@ -7,7 +7,7 @@ let selectedEvent = null;
 // Configuration CORS pour JSONBin.io
 const corsHeaders = {
   'Content-Type': 'application/json',
-  'X-Master-Key': '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju',
+  'X-Master-Key': '$$2a$10$j99ZptquF7iTqI/UP0xQMucBLqWZW/8bTlz859GxEqzmmfq0DpR4.',
   'Access-Control-Allow-Origin': 'https://dreamy-dolphin-b8aa6f.netlify.app'
 };
 
@@ -24,15 +24,24 @@ async function loadEvents() {
   }
 }
 
+// Dans script.js
 async function saveEvents(events) {
   try {
-    await fetch(`https://api.jsonbin.io/v3/b/6794ec2de41b4d34e47e7ce5`, {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
       method: 'PUT',
-      headers: corsHeaders,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_API_KEY,
+        'X-Bin-Private': 'true' // Ajout crucial
+      },
       body: JSON.stringify({ events })
     });
+
+    if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+    return await response.json();
   } catch (error) {
-    console.error('Erreur de sauvegarde:', error);
+    console.error('Échec de la sauvegarde:', error);
+    alert('Impossible de sauvegarder - Vérifiez la console');
   }
 }
 
