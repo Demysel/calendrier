@@ -3,6 +3,7 @@ const JSONBIN_BIN_ID = '6794ec2de41b4d34e47e7ce5';
 
 let currentDate = new Date();
 let selectedEvent = null;
+let currentTheme = localStorage.getItem('theme') || 'light';
 
 // Configuration CORS pour JSONBin.io
 const corsHeaders = {
@@ -56,6 +57,8 @@ function generateCalendar(date) {
   
   document.getElementById('monthYear').textContent = 
     `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+  document.querySelectorAll('.event').forEach(event => {
+    event.style.backgroundColor = getComputedStyle(event).backgroundColor;
 
   // Remplissage des jours
   for (let i = 0; i < 42; i++) {
@@ -96,6 +99,17 @@ function createEventElement(event) {
 // Gestion du modal
 const modal = document.getElementById('modal');
 const form = document.getElementById('eventForm');
+
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeToggle').textContent = currentTheme === 'dark' ? '🌞' : '🌙';
+}
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', currentTheme);
+  applyTheme();
+}
 
 function openModal(event, date) {
   selectedEvent = event;
@@ -146,6 +160,8 @@ document.getElementById('delete').onclick = async () => {
   generateCalendar(currentDate);
 };
 
+applyTheme();
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 // Navigation
 document.getElementById('prev').onclick = () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
