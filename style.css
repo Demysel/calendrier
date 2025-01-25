@@ -68,3 +68,46 @@ body {
 .perso { background: var(--perso); }
 .pro { background: var(--pro); }
 .enfant { background: var(--enfant); }
+
+/* style.css */
+.day {
+  min-height: 80px; /* Réduire la hauteur */
+  padding: 5px;
+  font-size: 0.8rem;
+  overflow-y: auto; /* Permettre le scroll */
+}
+
+.event {
+  font-size: 0.7rem;
+  padding: 3px;
+  margin: 1px;
+  line-height: 1.2;
+}
+
+/* Adaptation mobile */
+@media (max-width: 768px) {
+  .calendar {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .header h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 10px;
+  }
+
+  input, select {
+    font-size: 16px !important; /* Important pour iOS */
+  }
+}
+
+/* Correction spécifique Safari */
+@supports (-webkit-touch-callout: none) {
+  .day {
+    -webkit-overflow-scrolling: touch;
+  }
+}
