@@ -174,7 +174,7 @@ document.getElementById('next').onclick = () => {
 };
 
 // Initialisation
-document.querySelector('.close').onclick = () => modal.style.display = 'none';
-window.onclick = (e) => e.target === modal ? modal.style.display = 'none' : null;
-
+ document.querySelectorAll('.event').forEach(event => {
+    event.style.backgroundColor = getComputedStyle(event).backgroundColor;
+  });
 generateCalendar(currentDate);
