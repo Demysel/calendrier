@@ -87,6 +87,7 @@ function generateCalendar(date) {
     });
   });
 }
+}
 
 function createEventElement(event) {
   const element = document.createElement('div');
