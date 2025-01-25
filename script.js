@@ -1,5 +1,5 @@
 const JSONBIN_API_KEY = '%%JSONBIN_API_KEY%%';
-const JSONBIN_BIN_ID = '%%JSONBIN_BIN_ID%%';
+const JSONBIN_BIN_ID = '$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju';
 
 let currentDate = new Date();
 let selectedEvent = null;
