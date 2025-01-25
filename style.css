@@ -115,3 +115,47 @@ body {
     -webkit-overflow-scrolling: touch;
   }
 }
+/* style.css */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --day-border: #e0e0e0;
+  --modal-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --day-border: #2d2d2d;
+  --modal-bg: #2d2d2d;
+  
+  --perso: #FFD700;
+  --pro: #4a90e2;
+  --enfant: #76c893;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.day {
+  border-color: var(--day-border);
+}
+
+.modal-content {
+  background-color: var(--modal-bg);
+}
+
+/* Bouton theme */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--bg-color);
+  border: 1px solid var(--day-border);
+}
