@@ -1,73 +1,38 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendrier Firebase</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Agenda Partagé</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Conteneur principal -->
-  <div id="calendar-container">
-    <header>
-      <h1>Calendrier Interactif</h1>
-      <div id="navigation">
-        <button id="prev">◀ Précédent</button>
-        <span id="currentMonthYear"></span>
-        <button id="next">Suivant ▶</button>
-      </div>
-      <button id="darkModeToggle">Mode Sombre</button>
-    </header>
-    <div id="calendar">
-      <div id="days">
-        <div>Lun</div><div>Mar</div><div>Mer</div><div>Jeu</div><div>Ven</div><div>Sam</div><div>Dim</div>
-      </div>
-      <div id="dates"></div>
+    <div class="container">
+        <div class="header">
+            <button id="prev">&lt;</button>
+            <h2 id="monthYear"></h2>
+            <button id="next">&gt;</button>
+        </div>
+        <div class="calendar" id="calendar"></div>
     </div>
-    <footer>
-      <button id="reset">Réinitialiser</button>
-    </footer>
-  </div>
 
-  <!-- Modale -->
-  <div id="modal" style="display: none;">
-    <div id="modalContent">
-      <span id="close">&times;</span>
-      <h2>Ajouter un rendez-vous</h2>
-      <textarea id="appointment" placeholder="Entrez votre rendez-vous"></textarea>
-      <button id="save">Enregistrer</button>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="eventForm">
+                <input type="text" id="title" placeholder="Titre" required>
+                <select id="type" required>
+                    <option value="perso">Personnel</option>
+                    <option value="pro">Professionnel</option>
+                    <option value="enfant">Enfant</option>
+                </select>
+                <input type="datetime-local" id="date" required>
+                <input type="text" id="location" placeholder="Lieu">
+                <button type="submit">Enregistrer</button>
+                <button type="button" id="delete">Supprimer</button>
+            </form>
+        </div>
     </div>
-  </div>
 
-  <!-- Scripts Firebase via CDN -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-    import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-    // Configuration Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAU19mm6RDWy_fhoMo3SLWFuyvT4UDKKKk",
-      authDomain: "calendrier-300cb.firebaseapp.com",
-      databaseURL: "https://calendrier-300cb.firebaseio.com",
-      projectId: "calendrier-300cb",
-      storageBucket: "calendrier-300cb.appspot.com",
-      messagingSenderId: "556904721649",
-      appId: "1:556904721649:web:8d40a30990520e4ffbcd50",
-      measurementId: "G-9G8217QW9D"
-    };
-
-    // Initialisation Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Exemple de test Firebase
-    const testRef = ref(db, "test");
-    set(testRef, "Firebase configuré avec succès !")
-      .then(() => console.log("Firebase configuré correctement."))
-      .catch((error) => console.error("Erreur Firebase :", error));
-  </script>
-
-  <!-- Script principal -->
-  <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
