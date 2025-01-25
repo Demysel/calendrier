@@ -57,10 +57,8 @@ function generateCalendar(date) {
   
   document.getElementById('monthYear').textContent = 
     `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
-  document.querySelectorAll('.event').forEach(event => {
-    event.style.backgroundColor = getComputedStyle(event).backgroundColor;
 
-  // Remplissage des jours
+  // Correction de la structure des boucles
   for (let i = 0; i < 42; i++) {
     const day = document.createElement('div');
     day.className = 'day';
@@ -76,7 +74,8 @@ function generateCalendar(date) {
     
     calendar.appendChild(day);
   }
-  
+
+  // Chargement des événements APRÈS création des jours
   loadEvents().then(events => {
     events.forEach(event => {
       const day = document.querySelector(`[data-date="${event.date.split('T')[0]}"]`);
@@ -86,7 +85,6 @@ function generateCalendar(date) {
       }
     });
   });
-}
 }
 
 function createEventElement(event) {
