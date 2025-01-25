@@ -1,5 +1,6 @@
-const JSONBIN_API_KEY = '%%JSONBIN_API_KEY%%';
-const JSONBIN_BIN_ID = '%%JSONBIN_BIN_ID%%';
+// Remplacer les déclarations en haut du fichier par :
+const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
+const JSONBIN_BIN_ID = process.env.JSONBIN_BIN_ID;
 
 let currentDate = new Date();
 let selectedEvent = null;
