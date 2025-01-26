@@ -1,7 +1,10 @@
 :root {
-    --perso: #FFD700;
-    --pro: #87CEEB;
-    --enfant: #98FB98;
+    primary-color: #ECDFDC;    /* Couleur principale */
+    secondary-color: #FFE6BE;  /* Couleur secondaire */
+    text-color: #000000;       /* Couleur du texte */
+    border-color: #000000;     /* Bordures */
+    hover-color: #AD9898;      /* Survol */
+    font-family: 'Helvetica';      /* Police de caractères */
 }
 
 body {
@@ -11,7 +14,7 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
