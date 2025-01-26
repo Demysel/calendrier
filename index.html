@@ -1,49 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Agenda Partagé</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier Personnalisable</title>
+    <style>
+        :root {
+            /* Personnalisation facile */
+            --primary-color: #6366f1;
+            --secondary-color: #10b981;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --hover-color: #f1f5f9;
+            --font-family: 'Arial', sans-serif;
+        }
+
+        .calendar-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            font-family: var(--font-family);
+        }
+
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .calendar-day-header {
+            padding: 1rem;
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .calendar-day {
+            min-height: 100px;
+            padding: 0.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: var(--hover-color);
+            transform: scale(1.02);
+            z-index: 1;
+        }
+
+        .calendar-event {
+            padding: 0.25rem;
+            margin: 0.25rem 0;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .navigation-button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button class="theme-toggle" id="themeToggle">🌓</button>
-            <button id="prev">&lt;</button>
-            <h2 id="monthYear"></h2>
-            <button id="next">&gt;</button>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button class="navigation-button" id="prev-month">←</button>
+            <h2 id="current-month"></h2>
+            <button class="navigation-button" id="next-month">→</button>
         </div>
-<div class="calendar-header">
-  <div>Lun</div>
-  <div>Mar</div>
-  <div>Mer</div>
-  <div>Jeu</div>
-  <div>Ven</div>
-  <div>Sam</div>
-  <div>Dim</div>
-</div>
-<div class="calendar" id="calendar"></div>
-        <div class="calendar" id="calendar"></div>
+        
+        <div class="calendar-grid" id="calendar"></div>
     </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form id="eventForm">
-                <input type="text" id="title" placeholder="Titre" required>
-                <select id="type" required>
-                    <option value="perso">Personnel</option>
-                    <option value="pro">Professionnel</option>
-                    <option value="enfant">Enfant</option>
-                </select>
-                <input type="datetime-local" id="date" required class="mobile-friendly">
-                <input type="text" id="location" placeholder="Lieu">
-                <button type="submit">Enregistrer</button>
-                <button type="button" id="delete">Supprimer</button>
-            </form>
-        </div>
-    </div>
+    <script>
+        let currentDate = new Date();
+        const events = {}; // Stockage des événements
 
-    <script src="script.js"></script>
+        function generateCalendar(year, month) {
+            const calendarGrid = document.getElementById('calendar');
+            calendarGrid.innerHTML = '';
+
+            // En-têtes des jours
+            const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+            days.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+
+            // Calcul des jours
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // Jours vides au début
+            for(let i = 0; i < (firstDay.getDay() || 7) - 1; i++) {
+                calendarGrid.appendChild(createEmptyDay());
+            }
+
+            // Jours du mois
+            for(let day = 1; day <= lastDay.getDate(); day++) {
+                const dateKey = `${year}-${month + 1}-${day}`;
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.innerHTML = `
+                    <div>${day}</div>
+                    ${(events[dateKey] || []).map(event => `
+                        <div class="calendar-event">${event}</div>
+                    `).join('')}
+                `;
+
+                // Ajout d'événements au clic
+                dayElement.addEventListener('click', () => {
+                    const event = prompt("Ajouter un événement:");
+                    if(event) {
+                        events[dateKey] = [...(events[dateKey] || []), event];
+                        generateCalendar(year, month);
+                    }
+                });
+
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Mise à jour du titre
+            document.getElementById('current-month').textContent = 
+                `${firstDay.toLocaleString('fr-FR', { month: 'long', year: 'numeric' })}`;
+        }
+
+        function createEmptyDay() {
+            const day = document.createElement('div');
+            day.className = 'calendar-day';
+            day.style.background = '#f8fafc';
+            return day;
+        }
+
+        // Navigation
+        document.getElementById('prev-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+
+        document.getElementById('next-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+
+        // Initialisation
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    </script>
 </body>
 </html>
