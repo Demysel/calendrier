@@ -16,5 +16,15 @@ body {
 }
 
 .new-item {
-  margin-bottom: 10px;
+  margin: 10px 0;
+  padding: 5px;
+  width: 200px;
+}
+
+button {
+  padding: 5px 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
