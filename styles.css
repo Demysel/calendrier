@@ -1,15 +1,20 @@
-.container {
-    display: grid;
-    gap: 20px;
-    padding: 20px;
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial;
 }
 
 #calendar {
-    height: 600px;
+  height: 600px;
+  margin-bottom: 20px;
 }
 
 .lists {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.new-item {
+  margin-bottom: 10px;
 }
