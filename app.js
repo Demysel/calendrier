@@ -9,34 +9,29 @@ const BIN_IDS = {
 // Initialisation calendrier
 const calendar = new toastui.Calendar('#calendar', {
   defaultView: 'month',
-  isReadOnly: false,
-  usageStatistics: false
+  useFormPopup: true,
+  isReadOnly: false
 });
 
-// Fonction pour ajouter des éléments
+// Fonction d'ajout d'éléments
 window.addItem = async (type) => {
   const input = document.querySelector(`#${type} .new-item`);
-  const newItem = input.value;
+  const items = [...document.querySelectorAll(`#${type} li`)].map(li => li.textContent);
   
-  try {
-    const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_IDS[type]}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': API_KEY
-      },
-      body: JSON.stringify({
-        items: [...(await loadData(BIN_IDS[type])).record.items, newItem]
-      })
-    });
-    
-    if (response.ok) init();
-  } catch (error) {
-    console.error('Erreur:', error);
-  }
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_IDS[type]}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': API_KEY
+    },
+    body: JSON.stringify({ items: [...items, input.value] })
+  });
+  
+  input.value = '';
+  init();
 };
 
-// Charger les données
+// Chargement des données
 async function loadData(binId) {
   const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
     headers: { 'X-Master-Key': API_KEY }
@@ -44,15 +39,13 @@ async function loadData(binId) {
   return response.json();
 }
 
-// Mise à jour interface
+// Initialisation
 async function init() {
   try {
-    // Calendrier
     const calendarData = await loadData(BIN_IDS.calendar);
     calendar.createEvents(calendarData.record.events || []);
     
-    // Listes
-    ['tasks', 'shopping'].forEach(async (type) => {
+    for (const type of ['tasks', 'shopping']) {
       const data = await loadData(BIN_IDS[type]);
       const container = document.getElementById(type);
       container.innerHTML = `
@@ -60,11 +53,10 @@ async function init() {
         <button onclick="addItem('${type}')">Ajouter</button>
         <ul>${(data.record.items || []).map(item => `<li>${item}</li>`).join('')}</ul>
       `;
-    });
+    }
   } catch (error) {
     console.error('Erreur:', error);
   }
 }
 
-// Démarrer l'application
 init();
