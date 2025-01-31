@@ -1,3 +1,0 @@
-[build]
-  command = "sed -i \"s|$2a$10$mb360Dd18llkvSK/1R2BcOcjA.eAgGx1j3dSb4IB9me5ZJx7378Ju|${JSONBIN_API_KEY}|g\" script.js && sed -i \"s|6794ec2de41b4d34e47e7ce5|${JSONBIN_BIN_ID}|g\" script.js"
-  publish = "/"
