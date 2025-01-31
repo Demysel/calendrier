@@ -29,6 +29,40 @@ async function saveCalendar(events) {
         body: JSON.stringify({ events })
     });
 }
+// Gestion des listes
+async function manageList(binId, containerId) {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+        headers: { 'X-Master-Key': API_KEY }
+    });
+    const data = await response.json();
+    
+    const container = document.getElementById(containerId);
+    container.innerHTML = `
+        <input type="text" class="new-item">
+        <button class="add-btn">Ajouter</button>
+        <ul>${data.record.items.map(item => `<li>${item}</li>`).join('')}</ul>
+    `;
+
+    container.querySelector('.add-btn').addEventListener('click', async () => {
+        const newItem = container.querySelector('.new-item').value;
+        const updatedItems = [...data.record.items, newItem];
+        
+        await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': API_KEY
+            },
+            body: JSON.stringify({ items: updatedItems })
+        });
+        
+        manageList(binId, containerId);
+    });
+}
+
+// Initialisation
+manageList(process.env.TASKS_BIN_ID, 'tasks');
+manageList(process.env.SHOPPING_BIN_ID, 'shopping');
 
 // Écouteurs d'événements
 calendar.on('beforeCreateEvent', async (eventData) => {
