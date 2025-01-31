@@ -1,9 +1,3 @@
-const calendar = new toastui.Calendar('#calendar', {
-    defaultView: 'month',
-    useFormPopup: true,
-    useDetailPopup: true
-});
-
 // Configuration
 const API_KEY = 'VOTRE_CLE_API_JSONBIN'; // À remplacer
 const BIN_IDS = {
